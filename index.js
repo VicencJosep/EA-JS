@@ -1,4 +1,3 @@
-
 console.log("Inicio");
 
 async function fetchData() {
@@ -11,24 +10,30 @@ async function fetchData() {
     const posts = await postsResponse.json();
     console.log("Datos recibidos (posts):", posts);
 
-    const commentsResponse = await fetch("https://jsonplaceholder.typicode.com/comments?postId=1");
+    const commentsResponse = await fetch("https://jsonplaceholder.typicode.com/comments");
     const comments = await commentsResponse.json();
-    console.log("Datos recibidos (comments):", comments);
+    //console.log("Datos recibidos (comments):", comments);
 
-    // Usar funciones de alto nivel combinadas
-    // Agregar comentarios a los posts
-    const postsWithComments = posts.map(post => {
-      post.comments = comments.filter(comment => comment.postId === post.id);
-      return post;
-    });
+    
+    // Agregar comentarios a los posts con id par
+    const postsWithComments = posts
+      .filter(post => post.id % 2 === 0) 
+      .map(post => {
+        post.comments = comments.filter(comment => comment.postId === post.id);
+        return post;
+      });
+
+    console.log("Posts con id par y sus comentarios:", JSON.stringify(postsWithComments, null, 2));
+
+   
+    const postsWithMultipleComments = postsWithComments.filter(post => post.comments.length > 3);
+ 
+    const countPostsWithMultipleComments = postsWithMultipleComments.reduce((acc, post) => acc + 1, 0);
+    console.log("Número de posts cin id par y con más de tres comentarios:", countPostsWithMultipleComments);
 
     // Contar el número total de comentarios
     const totalComments = comments.reduce((acc, comment) => acc + 1, 0);
     console.log("Total de comentarios:", totalComments);
-
-    // Filtrar posts con más de un comentario
-    const postsWithMultipleComments = postsWithComments.filter(post => post.comments.length > 1);
-    console.log("Posts con más de un comentario:", postsWithMultipleComments);
 
   } catch (error) {
     console.error("Error:", error);
@@ -37,4 +42,5 @@ async function fetchData() {
 
 fetchData();
 
-console.log("Fin");
+
+
