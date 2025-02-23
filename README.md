@@ -1,4 +1,9 @@
 # EA-JS
+##REFERENCIES
+- https://chatgpt.com/
+- https://github.com/rocmeseguer/EA-JS
+- https://www.youtube.com/watch?v=rRgD1yVwIvE
+----> link al video explicatiu del codi: https://youtu.be/9CxrkP0KjG0
 
 ## Requisitos Previos
 
